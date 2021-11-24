@@ -1,9 +1,10 @@
-  <div>
-    <form [formGroup]="form">
-      <label>User Name</label>
-      <input type="text" [formControlName]="'username'"/>
-      <label>Password</label>
-      <input type="password" [formControlName]="'password'"/>
-      <button (click)="login()" type="submit">Submit</button>
-    </form>
+<form [formGroup]="form">
+  <div class="form-group">
+    <label>User Name</label>
+    <input type="text" [formControlName]="'username'" />
+    <label>Password</label>
+    <input type="password" [formControlName]="'password'" />
+    <button (click)="login()" type="submit">Submit</button>
+    <button *ngIf="isLoggedIn()" (click)="logout()" type="button">Logout</button>
   </div>
+</form>

@@ -46,10 +46,17 @@ export class AddUserComponent implements OnInit {
   // }
 
   login() {
-    console.log(this.form.getRawValue());
     this.userService.login(this.form.getRawValue()).subscribe(user => {
         console.log(user);
     });
+  }
+
+  logout(){
+    this.userService.logout();
+  }
+
+  isLoggedIn(): boolean{
+    return this.userService.isLoggedIn();
   }
 
   newUser(): void{
