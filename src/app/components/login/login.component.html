@@ -5,6 +5,5 @@
     <label>Password</label>
     <input type="password" [formControlName]="'password'" />
     <button (click)="login()" type="submit">Submit</button>
-    <button *ngIf="isLoggedIn()" (click)="logout()" type="button">Logout</button>
   </div>
 </form>

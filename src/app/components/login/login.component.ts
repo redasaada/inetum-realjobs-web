@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class AddUserComponent implements OnInit {
  
@@ -18,7 +20,8 @@ export class AddUserComponent implements OnInit {
   }
 
   submitted=false;
-  constructor(private userService : AuthenticationService) { 
+  constructor(private userService : AuthenticationService,
+    private router: Router) { 
     this.form = new FormGroup({
       username: new FormControl(),
       password: new FormControl()
@@ -28,27 +31,9 @@ export class AddUserComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // saveUser(): void {
-  //   const data = {
-  //     username: this.user.username,
-  //     email: this.user.email
-  //   };
-    
-
-  //   this.userService.create(data)
-  //     .subscribe({
-  //       next: (res) => {
-  //         console.log(res);
-  //         this.submitted=true;
-  //       },
-  //       error:(e) => console.error(e)
-  //     });
-  // }
-
   login() {
-    this.userService.login(this.form.getRawValue()).subscribe(user => {
-        console.log(user);
-    });
+    this.userService.login(this.form.getRawValue()).subscribe();
+    this.router.navigate(['']);
   }
 
   logout(){

@@ -31,7 +31,6 @@ export class AuthenticationService {
   }
 
   public isLoggedIn(): boolean{
-    console.log(this.isTokenExpired());
     return !this.isTokenExpired();
   }
 

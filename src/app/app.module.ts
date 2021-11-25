@@ -4,10 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
-import { AddUserComponent } from './components/add-user/add-user.component';
+import { AddUserComponent } from './components/login/login.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { FormControlComponent } from './form-control/form-control.component';
 import { UniversalAppInterceptor } from 'src/universalAppInterceptor';
+import { AuthGuardService } from './guard/authGuard.service';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { UniversalAppInterceptor } from 'src/universalAppInterceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true },
+    AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
