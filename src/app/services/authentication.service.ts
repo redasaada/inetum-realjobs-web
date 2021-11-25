@@ -22,30 +22,33 @@ export class AuthenticationService {
     const expiresAt = moment().add(authResult.expiresIn,'second');
 
     localStorage.setItem('id_token', authResult.accessToken);
-    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
-
+    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
   }
 
   logout(){
-    localStorage.removeItem("id_token");
+    localStorage.removeItem('id_token');
     localStorage.removeItem("expires_at");
   }
 
   public isLoggedIn(): boolean{
-    console.log(moment().isBefore(this.getExpiration()));
-    return moment().isBefore(this.getExpiration());
+    console.log(this.isTokenExpired());
+    return !this.isTokenExpired();
   }
 
   public isLoggedOut(): boolean{
     return !this.isLoggedIn();
   }
 
-  getExpiration(){
-    const expiration = localStorage.getItem("expires_at"); //ne fonctionne pas
-    let expiresAt;
-    if(expiration != null){
-       expiresAt = JSON.parse(expiration);
-    }
-    return moment(expiresAt);
+  isTokenExpired(): boolean{
+    const expiration: number = Number(localStorage.getItem("expires_at"));
+      if (expiration!= null) {
+        return ((1000 * expiration) - (new Date()).getTime()) < 5000;
+      } else {
+        return false;
+      }
   }
+
+  getJWTToken(){
+    return localStorage.getItem('id_token');
+}
 }
