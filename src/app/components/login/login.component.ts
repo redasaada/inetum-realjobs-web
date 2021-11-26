@@ -3,14 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-add-user',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class AddUserComponent implements OnInit {
+export class LoginComponent implements OnInit {
  
   form: FormGroup;
 
@@ -24,7 +23,7 @@ export class AddUserComponent implements OnInit {
     private router: Router) { 
     this.form = new FormGroup({
       username: new FormControl('', [Validators.required]),
-      password: new FormControl('',Validators.required)
+      password: new FormControl('',[Validators.required])
     });
   }
 

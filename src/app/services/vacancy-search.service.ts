@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpParams, HttpResponse } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { Filter } from './filter';
-import { Vacancy } from './vacancy';
+import { VacancyFilterFields } from '../models/vacancy-filter-fields.model';
+import { Vacancy } from '../vacancy';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FilterService {
+export class VacancySearchService {
 
   private baseUrl = "http://localhost::8080/api/vacancies"
 
@@ -15,7 +15,7 @@ export class FilterService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getFilteredVacancies(filter: Filter): Observable<Vacancy[]>{
+  getFilteredVacancies(filter: VacancyFilterFields): Observable<Vacancy[]>{
     let params = new HttpParams();
     params = params.append('functionTitle', filter.functionTitle);
     params = params.append('contractType', filter.contractType);
@@ -24,7 +24,8 @@ export class FilterService {
     params = params.append('requiredYearsOfExperience', filter.requiredYearsOfExperience);
 
 
-    let result = this.httpClient.get<Vacancy[]>('http://localhost:8080/api/vacancies/filter/', {observe:'body',  responseType :'json' , params: params})
+    let result = this.httpClient.get<Vacancy[]>('http://localhost:8080/api/vacancies/', 
+      {observe:'body',  responseType :'json' , params: params})
 
     return result;
     
