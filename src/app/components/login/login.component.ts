@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -23,8 +23,8 @@ export class AddUserComponent implements OnInit {
   constructor(private userService : AuthenticationService,
     private router: Router) { 
     this.form = new FormGroup({
-      username: new FormControl(),
-      password: new FormControl()
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('',Validators.required)
     });
   }
 
@@ -32,8 +32,9 @@ export class AddUserComponent implements OnInit {
   }
 
   login() {
-    this.userService.login(this.form.getRawValue()).subscribe();
-    this.router.navigate(['']);
+    this.userService.login(this.form.getRawValue()).subscribe(() => {
+      this.router.navigate(['']);
+    });
   }
 
   logout(){

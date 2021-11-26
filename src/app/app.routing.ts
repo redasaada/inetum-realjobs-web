@@ -4,7 +4,6 @@ import { UserDetailsComponent } from "./components/user-details/user-details.com
 import { AuthGuardService } from "./guard/authGuard.service";
 
 const appRoutes: Routes = [
-    { path: '', redirectTo: 'users', pathMatch: 'full' },
     { path: 'users/:username', component: UserDetailsComponent, canActivate: [AuthGuardService]},
     { path: 'login', component: LoginComponent}
 ];
