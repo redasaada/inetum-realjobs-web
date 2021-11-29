@@ -1,45 +1,41 @@
-<div class="col-md-8 offset-md-3">
+
     <h2>Filter Vacancies</h2>
-    <form (ngSubmit) = "onSubmit()">
-        
-        <div class="form-group">
-            <label> Function Title</label>
-            <input type="text" class="form-control" id="functionTitle"
-                [(ngModel)] = "filter.functionTitle" name = "functionTitle">
+    <div class="p-grid p-fluid">
+        <div class="p-col-12 p-md-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-id-card"></i></span>
+                <input type="text" pInputText [(ngModel)]="filter.functionTitle" placeholder="Function Title">         
+            </div>
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-file"></i></span>
+                <input type="text" pInputText [(ngModel)]="filter.contractType" placeholder="Contract Type">         
+            </div>
+
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-flag-fill"></i></span>
+                <input type="text" pInputText [(ngModel)]="filter.country" placeholder="Country">         
+            </div>
+
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-globe"></i></span>
+                <input type="text" pInputText [(ngModel)]="filter.industry" placeholder="Industry">         
+            </div>
+
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input type="text" pInputText [(ngModel)]="filter.requiredYearsOfExperience" placeholder="Max Years Of Experience">         
+            </div>
+            
+
         </div>
-    
-        <div class="form-group">
-            <label> contract Type</label>
-            <input type="text" class="form-control" id="contractType"
-                [(ngModel)] = "filter.contractType" name = "contractType">
-        </div>
-    
-        <div class="form-group">
-            <label> Industry</label>
-            <input type="text" class="form-control" id="industry"
-                [(ngModel)] = "filter.industry" name = "industry">
-        </div>
-    
-        <div class="form-group">
-            <label> Country</label>
-            <input type="text" class="form-control" id="country"
-                [(ngModel)] = "filter.country" name = "country">  
-        </div>
-    
-        <div class="form-group">
-            <label>  Required Years Of Experience</label>
-            <input type="number" class="form-control" id="requiredYearsOfExperience"
-                [(ngModel)] = "filter.requiredYearsOfExperience" name = "requiredYearsOfExperience">
-        </div>
-    
-        <button class= "btn btn-success" type="submit">Submit</button>
-    </form>
+
     </div>
-    <div class="container">
+    <button pButton type="button" label="Submit" (click)="onSubmit()"></button>
+
 
     <h2>Vacancies</h2>
-<table class="table table-striped">
-    <thead>
+
+    <p-table [value]="vacancies$ | async" styleClass="p-datatable-striped" responsiveLayout="scroll">    <ng-template pTemplate="header">
         <tr>
             <th>Function Title</th>
             <th>Contract Type</th>
@@ -48,9 +44,9 @@
             <th>Company</th>
             <th>Posting Date</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor = "let vacancy of vacancies$|async">
+    </ng-template>
+    <ng-template pTemplate="body" let-vacancy>
+        <tr>
             <td>{{ vacancy.functionTitle}}</td>
             <td>{{ vacancy.contractType}}</td>
             <td>{{ vacancy.city}}</td>
@@ -58,6 +54,5 @@
             <td>{{ vacancy.companyName}}</td>
             <td>{{ vacancy.postingDate}}</td>
         </tr>
-    </tbody>
-</table>
-</div>
+    </ng-template>
+</p-table>

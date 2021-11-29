@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { VacancyFilterFields } from '../../models/vacancy-filter-fields.model';
 import { VacancySearchService } from '../../services/vacancy-search.service';
 import { Vacancy } from '../../vacancy';
+import { TableModule } from 'primeng/table';
+
 
 @Component({
   selector: 'app-filter-form',
@@ -19,6 +21,8 @@ export class FilterFormComponent implements OnInit {
     requiredYearsOfExperience: 0
   };
   vacancies$: Observable<Vacancy[]>
+
+  countries: string[] =["Belgium", "France"];
   
   constructor(private vacancySearchService: VacancySearchService) { }
 

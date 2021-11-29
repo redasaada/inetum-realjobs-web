@@ -9,6 +9,13 @@ import { LoginComponent } from './components/login/login.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UniversalAppInterceptor } from 'src/app/interceptor/universalAppInterceptor';
 import { AuthGuardService } from './guard/authGuard.service';
+import{AccordionModule} from 'primeng/accordion';
+import {TableModule} from 'primeng/table';
+import {KeyFilterModule} from 'primeng/keyfilter';
+import {DropdownModule} from 'primeng/dropdown';
+import {ButtonModule} from 'primeng/button';
+
+
 
 @NgModule({
   declarations: [
@@ -22,6 +29,11 @@ import { AuthGuardService } from './guard/authGuard.service';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    AccordionModule,
+    TableModule,
+    KeyFilterModule,
+    DropdownModule,
+    ButtonModule,
     routing
   ],
   providers: [
