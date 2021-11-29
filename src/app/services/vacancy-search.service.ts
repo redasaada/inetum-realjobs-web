@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpClientModule, HttpParams, HttpResponse } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { VacancyFilterFields } from '../models/vacancy-filter-fields.model';
-import { Vacancy } from '../vacancy';
+import { Vacancy } from '../models/vacancy';
 
 @Injectable({
   providedIn: 'root'

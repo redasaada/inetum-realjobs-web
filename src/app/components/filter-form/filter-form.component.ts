@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { VacancyFilterFields } from '../../models/vacancy-filter-fields.model';
 import { VacancySearchService } from '../../services/vacancy-search.service';
-import { Vacancy } from '../../vacancy';
+import { Vacancy } from '../../models/vacancy';
 
 @Component({
   selector: 'app-filter-form',

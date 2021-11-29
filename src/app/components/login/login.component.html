@@ -1,9 +1,29 @@
-<form [formGroup]="form" (ngSubmit)="login()" novalidate>
+<form [formGroup]="loginForm" (ngSubmit)="login()">
   <div class="form-group">
+
     <label>User Name</label>
-    <input type="text" [formControlName]="'username'" />
-    <label>Password</label>
-    <input type="password" [formControlName]="'password'" />
-    <button type="submit">Submit</button>
+    <input type="text" [formControlName]="'username'"/>
+    <div *ngIf="(username.invalid && (username.dirty || username.touched))" class="alert">
+      <div *ngIf="username.errors?.['required']">
+        Username is required
+      </div>
+    </div>
+    <div>
+      <label>Password</label>
+      <input type="password" [formControlName]="'password'"/>
+      <div *ngIf=" (password.invalid && (password.dirty || password.touched))" class="alert">
+        <div *ngIf="password.errors?.['required']">
+          Password is required
+        </div>
+      </div>
+    </div>
+    <p>
+      <button [disabled]="loginForm.invalid" type="submit">Submit</button>
+    </p>
+  </div>
+  <div>
+    <div *ngIf="badCredentials">
+        Bad credentials
+    </div>
   </div>
 </form>
