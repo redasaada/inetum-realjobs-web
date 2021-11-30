@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule, HttpParams, HttpResponse } from '@angular
 import { Observable } from 'rxjs';
 import { VacancyFilterFields } from '../models/vacancy-filter-fields.model';
 import { Vacancy } from '../vacancy';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,10 @@ export class VacancySearchService {
 
     return result;
     
-  }
+  };
+
+  submitVacancy(vacancyForm: Vacancy): Observable<Vacancy>{
+    return this.httpClient.post<Vacancy>('http://localhost:8080/api/vacancies/create', vacancyForm);
+
+  };
 }

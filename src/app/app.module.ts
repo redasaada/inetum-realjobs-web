@@ -14,6 +14,19 @@ import {TableModule} from 'primeng/table';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import {DropdownModule} from 'primeng/dropdown';
 import {ButtonModule} from 'primeng/button';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {SliderModule} from 'primeng/slider';
+import { PanelModule } from "primeng/panel";
+import{BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MessagesModule} from "primeng/messages";
+import {MessageModule} from 'primeng/message';
+
+
+
+
+
+import { VacancyCreationComponent } from './components/vacancy-creation/vacancy-creation.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
@@ -22,7 +35,8 @@ import {ButtonModule} from 'primeng/button';
     AppComponent,
     FilterFormComponent,
     LoginComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    VacancyCreationComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +48,13 @@ import {ButtonModule} from 'primeng/button';
     KeyFilterModule,
     DropdownModule,
     ButtonModule,
+    InputTextareaModule,
+    SliderModule,
+    InputTextModule,
+    PanelModule,
+    BrowserAnimationsModule,
+    MessagesModule,
+    MessageModule,
     routing
   ],
   providers: [
