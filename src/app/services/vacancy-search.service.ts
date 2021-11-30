@@ -36,4 +36,8 @@ export class VacancySearchService {
     return this.httpClient.post<Vacancy>('http://localhost:8080/api/vacancies/create', vacancyForm);
 
   };
+
+  getAllVacancies(): Observable<Vacancy[]>{
+    return this.httpClient.get<Vacancy[]>('http://localhost:8080/api/vacancies/all', {});
+  }
 }

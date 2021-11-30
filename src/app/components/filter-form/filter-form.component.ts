@@ -24,9 +24,12 @@ export class FilterFormComponent implements OnInit {
 
   countries: string[] =["Belgium", "France"];
   
-  constructor(private vacancySearchService: VacancySearchService) { }
+  constructor(private vacancySearchService: VacancySearchService) {
+    this.vacancies$ = this.vacancySearchService.getAllVacancies();
+   }
 
   ngOnInit(): void {
+    
   }
 
   getFilteredVacancies(){
