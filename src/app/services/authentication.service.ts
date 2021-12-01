@@ -18,6 +18,10 @@ export class AuthenticationService {
     .pipe(tap((res: any) => this.setSession(res)));
   }
 
+  register(user: User) : Observable<string> {
+    return this.http.post<string>(baseUrl+'signUp', user);
+  }
+
   private setSession(authResult: any){
     const expiresAt = moment().add(authResult.expiresIn,'second');
 

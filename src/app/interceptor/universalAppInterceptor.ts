@@ -8,13 +8,20 @@ export class UniversalAppInterceptor implements HttpInterceptor {
   constructor( private authService: AuthenticationService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    const token = this.authService.getJWTToken();
-    req = req.clone({
-      url:  req.url,
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    return next.handle(req);
+        console.log(req.url);
+        console.log(req.url.includes('/signUp'));
+        if (!req.url.includes('/login') && !req.url.includes('/signUp')) {
+            const idToken = localStorage.getItem("id_token");
+
+            if (idToken) {
+                const cloned = req.clone({
+                    headers: req.headers.set("Authorization",
+                        "Bearer " + idToken)
+                });
+
+                return next.handle(cloned);
+            }
+        }
+        return next.handle(req);
   }
 }
