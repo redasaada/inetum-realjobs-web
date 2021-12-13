@@ -1,14 +1,15 @@
-import { NgModule } from "@angular/core";
-import { ButtonModule } from 'primeng/button';
-import { InputText } from 'primeng/inputtext';
-import { Panel } from 'primeng/panel';
+import {NgModule} from "@angular/core";
+import {ButtonModule} from 'primeng/button';
+import {InputTextModule} from 'primeng/inputtext';
+import {PanelModule} from 'primeng/panel';
 
 @NgModule({
-    imports: [
-        ButtonModule,
-        InputText,
-        Panel
-    ],
-    declarations: []
+  imports: [
+    ButtonModule,
+    InputTextModule,
+    PanelModule
+  ],
+  declarations: []
 })
-export class PrimengImportsModule{}
+export class PrimengImportsModule {
+}
