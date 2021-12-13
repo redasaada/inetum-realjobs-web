@@ -12,6 +12,7 @@ export class AuthGuardService implements CanActivate {
 
   canActivate(): boolean {
     if (this.auth.isTokenExpired()) {
+      // noinspection JSIgnoredPromiseFromCall
       this.router.navigate(['login']);
     }
     return true;
