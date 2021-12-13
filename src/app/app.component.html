@@ -5,7 +5,8 @@
     </li>
     <li class="nav-item">
       <a *ngIf="!isLoggedIn()" routerLink="login" routerLinkActive="active" class="nav-link">Log in now</a>
-      <button (click)="logout()" *ngIf="isLoggedIn()" routerLink="" routerLinkActive="active" class="nav-link">Log out</button>
+      <button (click)="logout()" *ngIf="isLoggedIn()" routerLink="" routerLinkActive="active" class="nav-link">Log out
+      </button>
     </li>
   </div>
 </nav>
