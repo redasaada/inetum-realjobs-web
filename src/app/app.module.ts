@@ -9,13 +9,15 @@ import {LoginComponent} from './components/login/login.component';
 import {UserDetailsComponent} from './components/user-details/user-details.component';
 import {UniversalAppInterceptor} from 'src/app/interceptor/universalAppInterceptor';
 import {AuthGuardService} from './guard/authGuard.service';
+import {NotFoundComponent} from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FilterFormComponent,
     LoginComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
