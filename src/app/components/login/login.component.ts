@@ -31,21 +31,17 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.loginForm.valid) {
-      // this.empty=false;
-      this.userService.login(this.loginForm.getRawValue())
-        .subscribe({
-          complete: () => {
-            // noinspection JSIgnoredPromiseFromCall
-            this.router.navigate(['']);
-            this.badCredentials = false;
-          },
-          error: () => this.badCredentials = true,
-        });
-    } else {
-      // this.empty= true;
-    }
+    if (!this.loginForm.valid) return;
 
+    this.userService.login(this.loginForm.getRawValue())
+      .subscribe({
+        complete: () => {
+          // noinspection JSIgnoredPromiseFromCall
+          this.router.navigate(['']);
+          this.badCredentials = false;
+        },
+        error: () => this.badCredentials = true,
+      });
   }
 
   logout() {
