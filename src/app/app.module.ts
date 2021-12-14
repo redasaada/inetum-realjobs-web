@@ -27,9 +27,10 @@ import {NotFoundComponent} from './components/not-found/not-found.component';
     routing
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true},
     AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

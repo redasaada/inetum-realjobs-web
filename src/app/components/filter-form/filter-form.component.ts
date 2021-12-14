@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { VacancyFilterFields } from '../../models/vacancy-filter-fields.model';
-import { VacancySearchService } from '../../services/vacancy-search.service';
-import { Vacancy } from '../../models/vacancy';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {VacancyFilterFields} from '../../models/vacancy-filter-fields.model';
+import {VacancySearchService} from '../../services/vacancy-search.service';
+import {Vacancy} from '../../models/vacancy';
 
 @Component({
   selector: 'app-filter-form',
   templateUrl: './filter-form.component.html',
-  styleUrls: ['./filter-form.component.css']
+  styleUrls: ['./filter-form.component.scss']
 })
 export class FilterFormComponent implements OnInit {
-  
-  filter: VacancyFilterFields ={
+
+  filter: VacancyFilterFields = {
     functionTitle: "",
     contractType: "",
     industry: "",
@@ -19,17 +19,18 @@ export class FilterFormComponent implements OnInit {
     requiredYearsOfExperience: 0
   };
   vacancies$: Observable<Vacancy[]>
-  
-  constructor(private vacancySearchService: VacancySearchService) { }
+
+  constructor(private vacancySearchService: VacancySearchService) {
+  }
 
   ngOnInit(): void {
   }
 
-  getFilteredVacancies(){
+  getFilteredVacancies() {
     this.vacancies$ = this.vacancySearchService.getFilteredVacancies(this.filter);
   }
 
-  onSubmit(){
+  onSubmit() {
     this.getFilteredVacancies();
   }
 
