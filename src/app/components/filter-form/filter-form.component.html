@@ -43,6 +43,7 @@
             <th>Offer</th>
             <th>Company</th>
             <th>Posting Date</th>
+            <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-vacancy>
@@ -53,6 +54,7 @@
             <td>{{ vacancy.offer}}</td>
             <td>{{ vacancy.companyName}}</td>
             <td>{{ vacancy.postingDate}}</td>
+            <td><p-button label="Apply" icon="pi pi-check" iconPos="left" (onClick)="handleClick(vacancy)"></p-button></td>
         </tr>
     </ng-template>
 </p-table>

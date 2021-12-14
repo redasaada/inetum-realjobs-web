@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Vacancy } from 'src/app/vacancy';
 import { Country } from 'src/app/models/country.model';
 import { FormGroup, FormControl, AsyncValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
-import { VacancySearchService } from 'src/app/services/vacancy-search.service';
+import { VacancyService } from 'src/app/services/vacancy.service';
 import { Validators } from '@angular/forms';
 import { delay, map, Observable, of } from 'rxjs';
 import { textValidation, numberValidation } from 'src/app/validators/vacancy.validator';
@@ -25,12 +25,12 @@ export class VacancyCreationComponent {
 
   vacancyForm = new FormGroup({
     functionTitle: new FormControl('', [textValidation]),
-    contractType: new FormControl(''),
+    contractType: new FormControl('', [textValidation]),
     offer: new FormControl('', [textValidation]),
     postalCode: new FormControl('', [numberValidation]),
     requiredYearsOfExperience: new FormControl(''),
     city: new FormControl('',[textValidation]),
-    country: new FormControl(''),
+    country: new FormControl('', [textValidation]),
     nr: new FormControl('',[numberValidation]),
     streetName: new FormControl('',[textValidation]),
     requiredExperienceSkillsEducation: new FormControl(''),
@@ -54,15 +54,17 @@ export class VacancyCreationComponent {
     {name: 'Permanent'},
   ];
 
-  constructor(private vacancySearchService: VacancySearchService) {
+  constructor(private vacancyService: VacancyService) {
    }
 
   onSubmit(){
     if(!this.vacancyForm.invalid){
       console.log('valid');
-      this.vacancy = {...this.vacancyForm.value}
+      this.vacancy = {...this.vacancyForm.value};
 
-      this.vacancySearchService.submitVacancy(this.vacancy).subscribe(data => this.vacancy);
+      console.log(this.vacancy);
+
+      this.vacancyService.submitVacancy(this.vacancy).subscribe(data => this.vacancy);
     }
     else{
       console.log('invalid');
