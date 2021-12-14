@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { ApplicationInitStatus, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { VacancyFilterFields } from '../../models/vacancy-filter-fields.model';
-import { VacancySearchService } from '../../services/vacancy-search.service';
+import { VacancyService } from '../../services/vacancy.service';
 import { Vacancy } from '../../vacancy';
 import { TableModule } from 'primeng/table';
+import { Application } from 'src/app/models/application.model';
 
 
 @Component({
@@ -22,10 +23,17 @@ export class FilterFormComponent implements OnInit {
   };
   vacancies$: Observable<Vacancy[]>
 
+  application: Application = {
+    timeCreated: '',
+    status: "",
+    vacancyId: 0,
+    userId: 0,
+  };
+
   countries: string[] =["Belgium", "France"];
   
-  constructor(private vacancySearchService: VacancySearchService) {
-    this.vacancies$ = this.vacancySearchService.getAllVacancies();
+  constructor(private vacancyService: VacancyService) {
+    this.vacancies$ = this.vacancyService.getAllVacancies();
    }
 
   ngOnInit(): void {
@@ -33,11 +41,24 @@ export class FilterFormComponent implements OnInit {
   }
 
   getFilteredVacancies(){
-    this.vacancies$ = this.vacancySearchService.getFilteredVacancies(this.filter);
+    this.vacancies$ = this.vacancyService.getFilteredVacancies(this.filter);
   }
 
   onSubmit(){
     this.getFilteredVacancies();
+  }
+
+  handleClick(vacancy: Vacancy){
+    this.application.timeCreated = new Date().toLocaleString();
+    this.application.status = "new";
+    this.application.vacancyId = vacancy.id;
+    this.application.userId = 1; //todo hardcoded for the moment
+
+    console.log("pre applied");
+    
+    this.vacancyService.applyForVacancy(this.application);
+    console.log("applied");
+  
   }
 
 }
