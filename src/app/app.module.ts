@@ -10,6 +10,7 @@ import {UserDetailsComponent} from './components/user-details/user-details.compo
 import {UniversalAppInterceptor} from 'src/app/interceptor/universalAppInterceptor';
 import {AuthGuardService} from './guard/authGuard.service';
 import {NotFoundComponent} from './components/not-found/not-found.component';
+import { RecruiterOverviewComponent } from './components/recruiter-overview/recruiter-overview.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {NotFoundComponent} from './components/not-found/not-found.component';
     FilterFormComponent,
     LoginComponent,
     UserDetailsComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    RecruiterOverviewComponent
   ],
   imports: [
     BrowserModule,
