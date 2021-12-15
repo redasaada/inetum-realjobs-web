@@ -9,6 +9,9 @@
         Log out
       </button>
     </li>
+    <li *ngIf="isLoggedIn()" routerLink="recruiter/overview" routerLinkActive="active" class="nav-link">
+      My vacancies
+    </li>
   </div>
 </nav>
 
