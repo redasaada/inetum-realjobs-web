@@ -1,30 +1,34 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()">
+<form [formGroup]="loginForm" (ngSubmit)="login()" id="loginForm">
   <div class="form-group">
-
-    <label>User Name</label>
-    <input type="text" [formControlName]="'username'" />
-    <div *ngIf="(username.invalid && (username.dirty || username.touched))" class="alert">
-      <div *ngIf="username.errors?.['required']">
-        Username is required
-      </div>
-    </div>
-    <div>
-      <label>Password</label>
-      <input type="password" [formControlName]="'password'" />
-      <div *ngIf=" (password.invalid && (password.dirty || password.touched))" class="alert">
-        <div *ngIf="password.errors?.['required']">
-          Password is required
+    <p-panel header="register" class="content">
+      <label>User Name</label>
+      <input type="text" [formControlName]="'username'" />
+      <div *ngIf="(username.invalid && (username.dirty || username.touched))" class="alert">
+        <div *ngIf="username.errors?.['required']" style="color:red">
+          Username is required
         </div>
       </div>
-    </div>
-    <p>
-      <button [disabled]="loginForm.invalid" type="submit">Submit</button>
-    </p>
+      <div>
+        <label>Password</label>
+        <input type="password" [formControlName]="'password'" />
+        <div *ngIf=" (password.invalid && (password.dirty || password.touched))" class="alert">
+          <div *ngIf="password.errors?.['required']" style="color:red">
+            Password is required
+          </div>
+        </div>
+      </div>
+      <span id="buttons">
+        <p>
+          <button [disabled]="loginForm.invalid" type="submit">Submit</button>
+        </p>
+        <a routerLink="/register" routerLinkActive="active">Register</a>
+      </span>
+    </p-panel>
   </div>
   <div>
     <div *ngIf="badCredentials" style="color:red">
       Bad credentials
     </div>
   </div>
-  <a routerLink="/register" routerLinkActive="active">Register</a>
+
 </form>

@@ -4,12 +4,15 @@
       <a routerLink="" routerLinkActive="active" class="nav-link">Inetum-RealJobs</a>
     </li>
     <li class="nav-item">
+      <a routerLink="vacancy/search" routerLinkActive="active" class="nav-link">Search</a>
+    </li>
+    <li class="nav-item">
       <a *ngIf="!isLoggedIn()" routerLink="login" routerLinkActive="active" class="nav-link">Log in now</a>
       <button (click)="logout()" *ngIf="isLoggedIn()" routerLink="" routerLinkActive="active" class="nav-link">Log out</button>
     </li>
   </div>
 </nav>
 
-<div class="container">
+<div class="container" id="logo">
   <router-outlet></router-outlet>
 </div>
