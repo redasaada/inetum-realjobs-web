@@ -15,14 +15,12 @@ export class LoginComponent implements OnInit {
 
   badCredentials: boolean = false;
 
-  // empty:boolean;
-
   constructor(private userService: AuthenticationService,
     private router: Router, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
     this.loginForm.valueChanges.subscribe(() =>{
@@ -32,7 +30,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
-      // this.empty=false;
       this.userService.login(this.loginForm.getRawValue()).subscribe(() => {
         this.router.navigate(['']);
         this.badCredentials = false;
@@ -57,8 +54,8 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
 
-  get username() {
-    return this.loginForm.get('username');
+  get email() {
+    return this.loginForm.get('email');
   }
 
   get password() {
