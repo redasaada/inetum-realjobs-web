@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Vacancy} from "../../models/vacancy";
+import {VacancySearchService} from "../../services/vacancy-search.service";
 
 @Component({
   selector: 'app-recruiter-overview',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./recruiter-overview.component.scss']
 })
 export class RecruiterOverviewComponent implements OnInit {
+  vacancies: Vacancy[] = [];
 
-  constructor() { }
+  constructor(private vacancyService: VacancySearchService) { }
 
   ngOnInit(): void {
+    this.getAllVacancies();
+  }
+
+  getAllVacancies() {
+    return this.vacancies = this.vacancyService.getAllVacancies();
   }
 
 }

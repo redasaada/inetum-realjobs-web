@@ -11,6 +11,7 @@ import {UniversalAppInterceptor} from 'src/app/interceptor/universalAppIntercept
 import {AuthGuardService} from './guard/authGuard.service';
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import { RecruiterOverviewComponent } from './components/recruiter-overview/recruiter-overview.component';
+import {TableModule} from "primeng/table";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RecruiterOverviewComponent } from './components/recruiter-overview/recr
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    routing
+    routing,
+    TableModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true},

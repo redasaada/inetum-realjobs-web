@@ -26,4 +26,8 @@ export class VacancySearchService {
       .get<Vacancy[]>("http://localhost:8080/api/vacancies/",
         {observe: 'body', responseType: 'json', params: params});
   }
+
+  getAllVacancies(): Vacancy[] {
+      return this.vacancies;
+  }
 }
