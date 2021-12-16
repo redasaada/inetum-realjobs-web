@@ -16,8 +16,9 @@ export class RecruiterOverviewComponent implements OnInit {
     this.getAllVacancies();
   }
 
-  getAllVacancies() {
-    return this.vacancies = this.vacancyService.getAllVacancies();
+  getAllVacancies(): void {
+    this.vacancyService.getAllVacancies()
+      .subscribe(vacancies => this.vacancies = vacancies);
   }
 
 }

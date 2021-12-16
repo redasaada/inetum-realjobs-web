@@ -13,9 +13,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-vacancy>
           <tr>
-            <td>Function title</td>
-            <td>Date created</td>
-            <td>Vacancy manager}</td>
+            <td>{{vacancy.functionTitle}}</td>
+            <td>{{vacancy.createdOn}}</td>
+            <td>{{vacancy.createdBy}}</td>
             <td>Applicants</td>
           </tr>
         </ng-template>
