@@ -9,6 +9,7 @@ import {VacancySearchService} from "../../services/vacancy-search.service";
 })
 export class RecruiterOverviewComponent implements OnInit {
   vacancies: Vacancy[] = [];
+  title: string = "Overview: My vacancies";
 
   constructor(private vacancyService: VacancySearchService) { }
 
