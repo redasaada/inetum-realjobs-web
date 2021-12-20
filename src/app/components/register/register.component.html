@@ -4,26 +4,26 @@
             <p-panel header="register" class="content">
                 <div class="form-group">
                     <div class="p-field">
-                        <label for="username">Username*</label>
-                        <input [formControlName]="'username'" pInputText />
-                        <p-message severity="error" text="Username is required" *ngIf="registerForm.controls['username'].invalid
-                        &&registerForm.controls['username'].dirty">
+                        <label for="email">Email*</label>
+                        <input formControlName="email" pInputText />
+                        <p-message severity="error" text="Email is required" *ngIf="registerForm.controls['email'].invalid
+                        &&registerForm.controls['email'].dirty">
                         </p-message>
                     </div>
                     <div class="p-field">
                         <label for="password">Password*</label>
-                        <p-password [formControlName]="'password'" [toggleMask]="true"></p-password>
+                        <p-password formControlName="password" [toggleMask]="true"></p-password>
                         <p-message severity="error" text="Password must be 4 characters minimum"
                             *ngIf="registerForm.controls['password'].errors?.['minlength']"></p-message>
                     </div>
                     <div class="p-field">
                         <label for="password_repeat">Repeat Password*</label>
-                        <p-password [formControlName]="'password_repeat'" [toggleMask]="true"></p-password>
+                        <p-password formControlName="password_repeat" [toggleMask]="true"></p-password>
                         <p-message severity="error" text="Passwords must match" *ngIf="unmatchPassword() 
                     && verify(registerForm.controls['password_repeat'])"></p-message>
                     </div>
                     <div *ngFor="let role of eRoles" class="p-field-checkbox">
-                        <p-radioButton name="role" [value]="role" [formControlName]="'role'" aria-required="true">
+                        <p-radioButton name="role" [value]="role" formControlName="role" aria-required="true">
                         </p-radioButton>
                         <label [for]="role">{{role}}</label>
                     </div>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="p-field">
                         <label for="firstname">First Name*</label>
-                        <input [formControlName]="'firstName'" aria-describedby="firstname-help"
+                        <input formControlName="firstName" aria-describedby="firstname-help"
                             class="ng-invalid ng-dirty" pInputText 
                             (change)="onlyLetters($event, 'firstName')"/>
                         <p-message severity="error" text="First name is required" *ngIf="registerForm.controls['firstName'].invalid && 
@@ -50,7 +50,7 @@
                     </div>
                     <div class="p-field">
                         <label for="lastname">Last Name*</label>
-                        <input [formControlName]="'lastName'" aria-describedby="lastname-help"
+                        <input formControlName="lastName" aria-describedby="lastname-help"
                             class="ng-invalid ng-dirty" pInputText 
                             (change)="onlyLetters($event, 'lastName')"/>
                         <p-message severity="error" text="Last name is required" *ngIf="registerForm.controls['lastName'].invalid && 
@@ -59,7 +59,7 @@
                     </div>
                     <div class="p-field">
                         <label for="basic">Birth Date*</label>
-                        <p-calendar inputId="basic" [formControlName]="'dateOfBirth'"></p-calendar>
+                        <p-calendar inputId="basic" formControlName="dateOfBirth"></p-calendar>
                         <p-message severity="error" text="Birth date is required" *ngIf="registerForm.controls['dateOfBirth'].invalid &&
                     registerForm.controls['dateOfBirth'].dirty"></p-message>
                         <p-message severity="error" text="Birth date must be before today" *ngIf="isDateBeforeToday()">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="p-field">
                         <label for="streetName">Street Name*</label>
-                        <input [formControlName]="'streetName'" aria-describedby="streetName-help"
+                        <input formControlName="streetName" aria-describedby="streetName-help"
                             class="ng-invalid ng-dirty" pInputText 
                             (change)="onlyLetters($event, 'streetName')"/>
                         <p-message severity="error" text="Street name is required" *ngIf="registerForm.controls['streetName'].invalid && 
@@ -76,7 +76,7 @@
                     </div>
                     <div class="p-field">
                         <label for="houseNumber">House Number*</label>
-                        <input [formControlName]="'houseNumber'" aria-describedby="houseNumber-help"
+                        <input formControlName="houseNumber" aria-describedby="houseNumber-help"
                             class="ng-invalid ng-dirty" pInputText type="number" min="1"
                             (change)="onlyPositive($event, 'houseNumber')" />
                         <p-message severity="error" text="House number is required" *ngIf="registerForm.controls['houseNumber'].invalid &&
@@ -85,12 +85,12 @@
                     </div>
                     <div class="p-field">
                         <label for="box">Box</label>
-                        <input [formControlName]="'box'" aria-describedby="box-help" class="ng-invalid ng-dirty"
+                        <input formControlName="box" aria-describedby="box-help" class="ng-invalid ng-dirty"
                             pInputText type="number" min="1" (change)="onlyPositive($event, 'box')" />
                     </div>
                     <div class="p-field">
                         <label for="postalCode">Postal Code*</label>
-                        <input [formControlName]="'postalCode'" aria-describedby="postalCode-help"
+                        <input formControlName="postalCode" aria-describedby="postalCode-help"
                             class="ng-invalid ng-dirty" pInputText />
                         <p-message severity="error" text="Postal code is required" *ngIf="registerForm.controls['postalCode'].invalid && 
                         (registerForm.controls['postalCode'].dirty 
@@ -99,7 +99,7 @@
                     </div>
                     <div class="p-field">
                         <label for="city">City*</label>
-                        <input [formControlName]="'city'" aria-describedby="city-help" class="ng-invalid ng-dirty"
+                        <input formControlName="city" aria-describedby="city-help" class="ng-invalid ng-dirty"
                             pInputText 
                             (change)="onlyLetters($event, 'city')"/>
                         <p-message severity="error" text="City is required" *ngIf="registerForm.controls['city'].invalid &&
@@ -108,14 +108,15 @@
                     </div>
                     <div class="p-field">
                         <label for="country">Country*</label>
-                        <p-dropdown [options]="country" [formControlName]="'country'" placeholder="Select your country"
-                            optionLabel="name" optionValue="name" [showClear]="true"></p-dropdown>
+                        <p-dropdown [options]="countries$|async" formControlName="country" placeholder="Select your country"
+                            optionLabel="name" optionValue="id" [showClear]="true">
+                        </p-dropdown>
                         <p-message severity="error" text="Country is required" *ngIf="registerForm.controls['country'].invalid &&
                         (verify(registerForm.controls['country']))"></p-message>
                     </div>
                     <div class="p-field">
                         <label for="mobilePhone">Mobile Phone Number*</label>
-                        <p-inputMask [formControlName]="'mobilePhone'"
+                        <p-inputMask formControlName="mobilePhone"
                             [class.ng-invalid]="registerForm.controls['mobilePhone'].invalid" 
                             [class.ng-dirty]="registerForm.controls['mobilePhone'].dirty || registerForm.controls['mobilePhone'].touched" 
                             pInputText mask="+99999999999"></p-inputMask>

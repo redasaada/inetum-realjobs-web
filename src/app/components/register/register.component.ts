@@ -7,6 +7,9 @@ import { Roles } from 'src/app/models/roles.enum';
 import { User } from 'src/app/models/user.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MessageService } from 'primeng/api';
+import { Address } from 'src/app/models/address';
+import { CountryService } from 'src/app/services/country.service';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -29,25 +32,24 @@ export class RegisterComponent implements OnInit {
 
   roles: Roles;
 
-  country: Country[];
+  countries$: Observable<Country[]>;
 
   user: User;
 
   constructor(private authService: AuthenticationService, private router: Router,
-    private formBuilder: FormBuilder, private messageService: MessageService) {
+    private formBuilder: FormBuilder, private messageService: MessageService,
+    private countryService: CountryService) {
     this.gender = [
       { name: 'Male' },
-      { name: 'Female' }
+      { name: 'Female' },
+      { name: 'Other'}
     ];
-    this.country = [
-      { name: 'Belgium', code: 'BE' },
-      { name: 'France', code: 'FRA' }
-    ];
+    
   }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(4)]],
       password_repeat: ['', [Validators.required, Validators.minLength(4)]],
       role: ['', Validators.required],
@@ -65,18 +67,17 @@ export class RegisterComponent implements OnInit {
     });
     this.error = false;
     this.submitted = false;
+    this.getCountries();
+  
   }
 
   register() {
     if (this.registerForm.valid) {
-      this.user = { ... this.registerForm.value };
-      this.user.gender = this.user.gender['name'];
-      this.user.role = this.getKeyName(this.user.role);
-      console.log(this.user);
+      this.user = this.getUser();
       this.authService.register(this.user).subscribe(() => {
         this.onSuccess();
       }, error => {
-        this.onError();
+        this.onError(error.error.message);
       });
     } else {
       this.error = true;
@@ -116,8 +117,8 @@ export class RegisterComponent implements OnInit {
     this.messageService.add({ key: 'tl', severity: 'success', summary: 'Success', detail: 'Registration successful' });
   }
 
-  showError() {
-    this.messageService.add({ key: 'tl', severity: 'error', summary: 'Error', detail: 'Username is already taken' });
+  showError(errorMessage: string) { 
+    this.messageService.add({ key: 'tl', severity: 'error', summary: 'Error', detail: errorMessage });
   }
 
   async onSuccess() {
@@ -128,10 +129,10 @@ export class RegisterComponent implements OnInit {
     this.error = false;
   }
 
-  onError() {
+  onError(error: string) {
     this.error = true;
     this.submitted = false;
-    this.showError();
+    this.showError(error);
   }
 
   onlyPositive(event: any, controlName: string) {
@@ -148,5 +149,36 @@ export class RegisterComponent implements OnInit {
 
   private hasNumber(myString): boolean{
     return /\d/.test(myString);
-    }
+  }
+
+  private getUser(): User{
+    let user: User = new User();
+    user.email=this.registerForm.controls['email'].value;
+    user.password=this.registerForm.controls['password'].value;
+    user.role=this.getKeyName(this.registerForm.controls['role'].value);
+    let gender: Gender = this.registerForm.controls['gender'].value;
+    user.gender = gender['name'];
+    user.gender = user.gender.toUpperCase();
+    user.firstName = this.registerForm.controls['firstName'].value;
+    user.lastName = this.registerForm.controls['lastName'].value;
+    user.birthDate = new Date(this.registerForm.controls['dateOfBirth'].value).toJSON();
+    user.mobilePhone = this.registerForm.controls['mobilePhone'].value;
+    user.address = this.getAddress();
+    return user;
+  }
+
+  private getAddress(): Address{
+    let address1: Address = new Address();
+    address1.box=this.registerForm.controls['box'].value;
+    address1.streetName=this.registerForm.controls['streetName'].value;
+    address1.houseNumber=this.registerForm.controls['houseNumber'].value;
+    address1.city=this.registerForm.controls['city'].value;
+    address1.postalCode=this.registerForm.controls['postalCode'].value;
+    address1.country= this.registerForm.controls['country'].value;
+    return address1;
+  }
+
+  private getCountries(){
+    this.countries$ = this.countryService.getAllCountries();
+  }
 }

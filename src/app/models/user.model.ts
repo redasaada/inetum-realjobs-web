@@ -1,17 +1,14 @@
-export interface User {
+import { Address } from "./address";
+
+export class User {
     email: string;
     password: string;
     role: string;
     gender: string; 
     firstName: string;
     lastName: string;
-    dateOfBirth: string; 
-    streetName: string;
-    numberStreet: string;
-    box: string;
-    city: string;
-    postalCode: string;
-    country: string; 
+    birthDate: string; 
+    address: Address;
     mobilePhone: string;
     profilePicture: string;
 }
