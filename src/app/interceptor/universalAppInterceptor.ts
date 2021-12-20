@@ -1,6 +1,6 @@
-import { HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { AuthenticationService } from "../services/authentication.service";
+import {HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
+import {Injectable} from "@angular/core";
+import {AuthenticationService} from "../services/authentication.service";
 
 @Injectable()
 export class UniversalAppInterceptor implements HttpInterceptor {
@@ -9,13 +9,13 @@ export class UniversalAppInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (!req.url.includes('/login') && !req.url.includes('/signUp')) {
+    if (!req.url.includes("/login") && !req.url.includes("/signUp")) {
       const token = this.authService.getJWTToken();
       req = req.clone({
         url: req.url,
         setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
     }
     return next.handle(req);

@@ -1,22 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Country } from 'src/app/models/country';
-import { Gender } from 'src/app/models/gender';
-import { Roles } from 'src/app/models/roles.enum';
-import { User } from 'src/app/models/user.model';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { MessageService } from 'primeng/api';
-import { Address } from 'src/app/models/address';
-import { CountryService } from 'src/app/services/country.service';
-import { Observable } from 'rxjs';
+import {Component, OnInit} from "@angular/core";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {Country} from "src/app/models/country";
+import {Gender} from "src/app/models/gender";
+import {Roles} from "src/app/models/roles.enum";
+import {User} from "src/app/models/user.model";
+import {AuthenticationService} from "src/app/services/authentication.service";
+import {MessageService} from "primeng/api";
+import {Address} from "src/app/models/address";
+import {CountryService} from "src/app/services/country.service";
+import {Observable} from "rxjs";
 
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
-  providers: [MessageService]
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.css"],
+  providers: [MessageService],
 })
 export class RegisterComponent implements OnInit {
 
@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
 
   error: boolean;
 
-  registerForm: FormGroup
+  registerForm: FormGroup;
 
   gender: Gender[];
 
@@ -37,38 +37,42 @@ export class RegisterComponent implements OnInit {
   user: User;
 
   constructor(private authService: AuthenticationService, private router: Router,
-    private formBuilder: FormBuilder, private messageService: MessageService,
-    private countryService: CountryService) {
+              private formBuilder: FormBuilder, private messageService: MessageService,
+              private countryService: CountryService) {
     this.gender = [
-      { name: 'Male' },
-      { name: 'Female' },
-      { name: 'Other'}
+      {name: "Male"},
+      {name: "Female"},
+      {name: "Other"},
     ];
-    
+
+  }
+
+  get eRoles(): string[] {
+    return Object.values(Roles).map(role => role.toString());
   }
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      password_repeat: ['', [Validators.required, Validators.minLength(4)]],
-      role: ['', Validators.required],
-      gender: ['', Validators.required],
-      firstName: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')]],
-      lastName: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')]],
-      dateOfBirth: ['', Validators.required],
-      streetName: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')]],
-      houseNumber: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      box: [''],
-      city: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')]],
-      postalCode: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      country: ['', Validators.required],
-      mobilePhone: ['', [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(4)]],
+      password_repeat: ["", [Validators.required, Validators.minLength(4)]],
+      role: ["", Validators.required],
+      gender: ["", Validators.required],
+      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$")]],
+      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$")]],
+      dateOfBirth: ["", Validators.required],
+      streetName: ["", [Validators.required, Validators.pattern("^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$")]],
+      houseNumber: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
+      box: [""],
+      city: ["", [Validators.required, Validators.pattern("^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$")]],
+      postalCode: ["", [Validators.required, Validators.pattern("^[0-9]*$")]],
+      country: ["", Validators.required],
+      mobilePhone: ["", [Validators.required]],
     });
     this.error = false;
     this.submitted = false;
     this.getCountries();
-  
+
   }
 
   register() {
@@ -84,10 +88,6 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  get eRoles(): string[] {
-    return Object.values(Roles).map(role => role.toString());
-  }
-
   verify(control: AbstractControl): boolean {
     return control.touched || control.dirty;
   }
@@ -97,13 +97,13 @@ export class RegisterComponent implements OnInit {
   }
 
   unmatchPassword(): boolean {
-    let password = this.registerForm.controls['password'].value;
-    let password_repeat = this.registerForm.controls['password_repeat'].value;
+    let password = this.registerForm.controls["password"].value;
+    let password_repeat = this.registerForm.controls["password_repeat"].value;
     return password !== password_repeat;
   }
 
   isDateBeforeToday(): boolean {
-    let pickedDate = new Date(this.registerForm.controls['dateOfBirth'].value);
+    let pickedDate = new Date(this.registerForm.controls["dateOfBirth"].value);
     return new Date(pickedDate) > new Date(new Date().toDateString());
   }
 
@@ -114,18 +114,18 @@ export class RegisterComponent implements OnInit {
   }
 
   showSuccess() {
-    this.messageService.add({ key: 'tl', severity: 'success', summary: 'Success', detail: 'Registration successful' });
+    this.messageService.add({key: "tl", severity: "success", summary: "Success", detail: "Registration successful"});
   }
 
-  showError(errorMessage: string) { 
-    this.messageService.add({ key: 'tl', severity: 'error', summary: 'Error', detail: errorMessage });
+  showError(errorMessage: string) {
+    this.messageService.add({key: "tl", severity: "error", summary: "Error", detail: errorMessage});
   }
 
   async onSuccess() {
     this.submitted = true;
     this.showSuccess();
     await this.sleep(1000);
-    this.router.navigate(['login']);
+    this.router.navigate(["login"]);
     this.error = false;
   }
 
@@ -142,43 +142,43 @@ export class RegisterComponent implements OnInit {
   }
 
   onlyLetters(event: any, controlName: string) {
-    if (this.hasNumber(event.target.value)){
-      this.registerForm.get(controlName).patchValue('');
+    if (this.hasNumber(event.target.value)) {
+      this.registerForm.get(controlName).patchValue("");
     }
   }
 
-  private hasNumber(myString): boolean{
+  private hasNumber(myString): boolean {
     return /\d/.test(myString);
   }
 
-  private getUser(): User{
+  private getUser(): User {
     let user: User = new User();
-    user.email=this.registerForm.controls['email'].value;
-    user.password=this.registerForm.controls['password'].value;
-    user.role=this.getKeyName(this.registerForm.controls['role'].value);
-    let gender: Gender = this.registerForm.controls['gender'].value;
-    user.gender = gender['name'];
+    user.email = this.registerForm.controls["email"].value;
+    user.password = this.registerForm.controls["password"].value;
+    user.role = this.getKeyName(this.registerForm.controls["role"].value);
+    let gender: Gender = this.registerForm.controls["gender"].value;
+    user.gender = gender["name"];
     user.gender = user.gender.toUpperCase();
-    user.firstName = this.registerForm.controls['firstName'].value;
-    user.lastName = this.registerForm.controls['lastName'].value;
-    user.birthDate = new Date(this.registerForm.controls['dateOfBirth'].value).toJSON();
-    user.mobilePhone = this.registerForm.controls['mobilePhone'].value;
+    user.firstName = this.registerForm.controls["firstName"].value;
+    user.lastName = this.registerForm.controls["lastName"].value;
+    user.birthDate = new Date(this.registerForm.controls["dateOfBirth"].value).toJSON();
+    user.mobilePhone = this.registerForm.controls["mobilePhone"].value;
     user.address = this.getAddress();
     return user;
   }
 
-  private getAddress(): Address{
+  private getAddress(): Address {
     let address1: Address = new Address();
-    address1.box=this.registerForm.controls['box'].value;
-    address1.streetName=this.registerForm.controls['streetName'].value;
-    address1.houseNumber=this.registerForm.controls['houseNumber'].value;
-    address1.city=this.registerForm.controls['city'].value;
-    address1.postalCode=this.registerForm.controls['postalCode'].value;
-    address1.country= this.registerForm.controls['country'].value;
+    address1.box = this.registerForm.controls["box"].value;
+    address1.streetName = this.registerForm.controls["streetName"].value;
+    address1.houseNumber = this.registerForm.controls["houseNumber"].value;
+    address1.city = this.registerForm.controls["city"].value;
+    address1.postalCode = this.registerForm.controls["postalCode"].value;
+    address1.country = this.registerForm.controls["country"].value;
     return address1;
   }
 
-  private getCountries(){
+  private getCountries() {
     this.countries$ = this.countryService.getAllCountries();
   }
 }

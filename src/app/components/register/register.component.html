@@ -1,134 +1,144 @@
 <div class="registerPage">
-    <div class="form">
-        <form [formGroup]="registerForm" (ngSubmit)="register()">
-            <p-panel header="register" class="content">
-                <div class="form-group">
-                    <div class="p-field">
-                        <label for="email">Email*</label>
-                        <input formControlName="email" pInputText />
-                        <p-message severity="error" text="Email is required" *ngIf="registerForm.controls['email'].invalid
-                        &&registerForm.controls['email'].dirty">
-                        </p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="password">Password*</label>
-                        <p-password formControlName="password" [toggleMask]="true"></p-password>
-                        <p-message severity="error" text="Password must be 4 characters minimum"
-                            *ngIf="registerForm.controls['password'].errors?.['minlength']"></p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="password_repeat">Repeat Password*</label>
-                        <p-password formControlName="password_repeat" [toggleMask]="true"></p-password>
-                        <p-message severity="error" text="Passwords must match" *ngIf="unmatchPassword() 
-                    && verify(registerForm.controls['password_repeat'])"></p-message>
-                    </div>
-                    <div *ngFor="let role of eRoles" class="p-field-checkbox">
-                        <p-radioButton name="role" [value]="role" formControlName="role" aria-required="true">
-                        </p-radioButton>
-                        <label [for]="role">{{role}}</label>
-                    </div>
-                    <p-message severity="error" text="Role is required" *ngIf="registerForm.controls['role'].invalid &&
-                (verify(registerForm.controls['role']))"></p-message>
-                    <div class="p-field">
-                        <label for="gender">Gender*</label>
-                        <p-dropdown [options]="gender" formControlName="gender" placeholder="Select your gender"
-                            optionLabel="name" [showClear]="true"></p-dropdown>
-                        <p-message severity="error" text="Gender is required" *ngIf="registerForm.controls['gender'].invalid && 
-                    verify(registerForm.controls['gender'])"></p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="firstname">First Name*</label>
-                        <input formControlName="firstName" aria-describedby="firstname-help"
-                            class="ng-invalid ng-dirty" pInputText 
-                            (change)="onlyLetters($event, 'firstName')"/>
-                        <p-message severity="error" text="First name is required" *ngIf="registerForm.controls['firstName'].invalid && 
-                    (registerForm.controls['firstName'].dirty ||registerForm.controls['firstName'].touched)">
-                        </p-message>
-                        <p-message severity="error" text="Letters only"
-                            *ngIf="registerForm.controls['firstName'].errors?.['pattern']">
-                        </p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="lastname">Last Name*</label>
-                        <input formControlName="lastName" aria-describedby="lastname-help"
-                            class="ng-invalid ng-dirty" pInputText 
-                            (change)="onlyLetters($event, 'lastName')"/>
-                        <p-message severity="error" text="Last name is required" *ngIf="registerForm.controls['lastName'].invalid && 
-                    (registerForm.controls['lastName'].dirty ||registerForm.controls['lastName'].touched)">
-                        </p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="basic">Birth Date*</label>
-                        <p-calendar inputId="basic" formControlName="dateOfBirth"></p-calendar>
-                        <p-message severity="error" text="Birth date is required" *ngIf="registerForm.controls['dateOfBirth'].invalid &&
-                    registerForm.controls['dateOfBirth'].dirty"></p-message>
-                        <p-message severity="error" text="Birth date must be before today" *ngIf="isDateBeforeToday()">
-                        </p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="streetName">Street Name*</label>
-                        <input formControlName="streetName" aria-describedby="streetName-help"
-                            class="ng-invalid ng-dirty" pInputText 
-                            (change)="onlyLetters($event, 'streetName')"/>
-                        <p-message severity="error" text="Street name is required" *ngIf="registerForm.controls['streetName'].invalid && 
-                        (registerForm.controls['streetName'].dirty ||registerForm.controls['streetName'].touched)">
-                        </p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="houseNumber">House Number*</label>
-                        <input formControlName="houseNumber" aria-describedby="houseNumber-help"
-                            class="ng-invalid ng-dirty" pInputText type="number" min="1"
-                            (change)="onlyPositive($event, 'houseNumber')" />
-                        <p-message severity="error" text="House number is required" *ngIf="registerForm.controls['houseNumber'].invalid &&
-                        (registerForm.controls['houseNumber'].dirty || registerForm.controls['houseNumber'].touched)">
-                        </p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="box">Box</label>
-                        <input formControlName="box" aria-describedby="box-help" class="ng-invalid ng-dirty"
-                            pInputText type="number" min="1" (change)="onlyPositive($event, 'box')" />
-                    </div>
-                    <div class="p-field">
-                        <label for="postalCode">Postal Code*</label>
-                        <input formControlName="postalCode" aria-describedby="postalCode-help"
-                            class="ng-invalid ng-dirty" pInputText />
-                        <p-message severity="error" text="Postal code is required" *ngIf="registerForm.controls['postalCode'].invalid && 
-                        (registerForm.controls['postalCode'].dirty 
-                        ||registerForm.controls['postalCode'].touched)">
-                        </p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="city">City*</label>
-                        <input formControlName="city" aria-describedby="city-help" class="ng-invalid ng-dirty"
-                            pInputText 
-                            (change)="onlyLetters($event, 'city')"/>
-                        <p-message severity="error" text="City is required" *ngIf="registerForm.controls['city'].invalid &&
-                        (registerForm.controls['city'].dirty ||registerForm.controls['city'].touched)">
-                        </p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="country">Country*</label>
-                        <p-dropdown [options]="countries$|async" formControlName="country" placeholder="Select your country"
-                            optionLabel="name" optionValue="id" [showClear]="true">
-                        </p-dropdown>
-                        <p-message severity="error" text="Country is required" *ngIf="registerForm.controls['country'].invalid &&
-                        (verify(registerForm.controls['country']))"></p-message>
-                    </div>
-                    <div class="p-field">
-                        <label for="mobilePhone">Mobile Phone Number*</label>
-                        <p-inputMask formControlName="mobilePhone"
-                            [class.ng-invalid]="registerForm.controls['mobilePhone'].invalid" 
-                            [class.ng-dirty]="registerForm.controls['mobilePhone'].dirty || registerForm.controls['mobilePhone'].touched" 
-                            pInputText mask="+99999999999"></p-inputMask>
-                        <p-message severity="error" text="Mobile phone is required" *ngIf="registerForm.controls['mobilePhone'].invalid && 
-                        (registerForm.controls['mobilePhone'].dirty ||registerForm.controls['mobilePhone'].touched)">
-                        </p-message>
-                    </div>
-                    <button [disabled]="registerForm.invalid" type="button" pButton pRipple (click)="register()"
-                        label="Success" class="p-button p-mb-2"></button>
-                </div>
-            </p-panel>
-        </form>
-    </div>
-    <p-toast position="top-left" key="tl"></p-toast>
+  <div class="form">
+    <form (ngSubmit)="register()" [formGroup]="registerForm">
+      <p-panel class="content" header="register">
+        <div class="form-group">
+          <div class="p-field">
+            <label for="email">Email*</label>
+            <input formControlName="email" pInputText/>
+            <p-message *ngIf="registerForm.controls['email'].invalid
+                        &&registerForm.controls['email'].dirty" severity="error" text="Email is required">
+            </p-message>
+          </div>
+          <div class="p-field">
+            <label for="password">Password*</label>
+            <p-password [toggleMask]="true" formControlName="password"></p-password>
+            <p-message *ngIf="registerForm.controls['password'].errors?.['minlength']" severity="error"
+                       text="Password must be 4 characters minimum"></p-message>
+          </div>
+          <div class="p-field">
+            <label for="password_repeat">Repeat Password*</label>
+            <p-password [toggleMask]="true" formControlName="password_repeat"></p-password>
+            <p-message *ngIf="unmatchPassword()
+                    && verify(registerForm.controls['password_repeat'])" severity="error"
+                       text="Passwords must match"></p-message>
+          </div>
+          <div *ngFor="let role of eRoles" class="p-field-checkbox">
+            <p-radioButton [value]="role" aria-required="true" formControlName="role" name="role">
+            </p-radioButton>
+            <label [for]="role">{{role}}</label>
+          </div>
+          <p-message *ngIf="registerForm.controls['role'].invalid &&
+                (verify(registerForm.controls['role']))" severity="error" text="Role is required"></p-message>
+          <div class="p-field">
+            <label for="gender">Gender*</label>
+            <p-dropdown [options]="gender" [showClear]="true" formControlName="gender"
+                        optionLabel="name" placeholder="Select your gender"></p-dropdown>
+            <p-message *ngIf="registerForm.controls['gender'].invalid &&
+                    verify(registerForm.controls['gender'])" severity="error" text="Gender is required"></p-message>
+          </div>
+          <div class="p-field">
+            <label for="firstname">First Name*</label>
+            <input (change)="onlyLetters($event, 'firstName')" aria-describedby="firstname-help"
+                   class="ng-invalid ng-dirty" formControlName="firstName"
+                   pInputText/>
+            <p-message *ngIf="registerForm.controls['firstName'].invalid &&
+                    (registerForm.controls['firstName'].dirty ||registerForm.controls['firstName'].touched)"
+                       severity="error" text="First name is required">
+            </p-message>
+            <p-message *ngIf="registerForm.controls['firstName'].errors?.['pattern']" severity="error"
+                       text="Letters only">
+            </p-message>
+          </div>
+          <div class="p-field">
+            <label for="lastname">Last Name*</label>
+            <input (change)="onlyLetters($event, 'lastName')" aria-describedby="lastname-help"
+                   class="ng-invalid ng-dirty" formControlName="lastName"
+                   pInputText/>
+            <p-message *ngIf="registerForm.controls['lastName'].invalid &&
+                    (registerForm.controls['lastName'].dirty ||registerForm.controls['lastName'].touched)"
+                       severity="error" text="Last name is required">
+            </p-message>
+          </div>
+          <div class="p-field">
+            <label for="basic">Birth Date*</label>
+            <p-calendar formControlName="dateOfBirth" inputId="basic"></p-calendar>
+            <p-message *ngIf="registerForm.controls['dateOfBirth'].invalid &&
+                    registerForm.controls['dateOfBirth'].dirty" severity="error"
+                       text="Birth date is required"></p-message>
+            <p-message *ngIf="isDateBeforeToday()" severity="error" text="Birth date must be before today">
+            </p-message>
+          </div>
+          <div class="p-field">
+            <label for="streetName">Street Name*</label>
+            <input (change)="onlyLetters($event, 'streetName')" aria-describedby="streetName-help"
+                   class="ng-invalid ng-dirty" formControlName="streetName"
+                   pInputText/>
+            <p-message *ngIf="registerForm.controls['streetName'].invalid &&
+                        (registerForm.controls['streetName'].dirty ||registerForm.controls['streetName'].touched)"
+                       severity="error" text="Street name is required">
+            </p-message>
+          </div>
+          <div class="p-field">
+            <label for="houseNumber">House Number*</label>
+            <input (change)="onlyPositive($event, 'houseNumber')" aria-describedby="houseNumber-help"
+                   class="ng-invalid ng-dirty" formControlName="houseNumber" min="1" pInputText
+                   type="number"/>
+            <p-message *ngIf="registerForm.controls['houseNumber'].invalid &&
+                        (registerForm.controls['houseNumber'].dirty || registerForm.controls['houseNumber'].touched)"
+                       severity="error" text="House number is required">
+            </p-message>
+          </div>
+          <div class="p-field">
+            <label for="box">Box</label>
+            <input (change)="onlyPositive($event, 'box')" aria-describedby="box-help" class="ng-invalid ng-dirty"
+                   formControlName="box" min="1" pInputText type="number"/>
+          </div>
+          <div class="p-field">
+            <label for="postalCode">Postal Code*</label>
+            <input aria-describedby="postalCode-help" class="ng-invalid ng-dirty"
+                   formControlName="postalCode" pInputText/>
+            <p-message *ngIf="registerForm.controls['postalCode'].invalid &&
+                        (registerForm.controls['postalCode'].dirty
+                        ||registerForm.controls['postalCode'].touched)" severity="error" text="Postal code is required">
+            </p-message>
+          </div>
+          <div class="p-field">
+            <label for="city">City*</label>
+            <input (change)="onlyLetters($event, 'city')" aria-describedby="city-help" class="ng-invalid ng-dirty"
+                   formControlName="city"
+                   pInputText/>
+            <p-message *ngIf="registerForm.controls['city'].invalid &&
+                        (registerForm.controls['city'].dirty ||registerForm.controls['city'].touched)" severity="error"
+                       text="City is required">
+            </p-message>
+          </div>
+          <div class="p-field">
+            <label for="country">Country*</label>
+            <p-dropdown [options]="countries$|async" [showClear]="true" formControlName="country"
+                        optionLabel="name" optionValue="id" placeholder="Select your country">
+            </p-dropdown>
+            <p-message *ngIf="registerForm.controls['country'].invalid &&
+                        (verify(registerForm.controls['country']))" severity="error"
+                       text="Country is required"></p-message>
+          </div>
+          <div class="p-field">
+            <label for="mobilePhone">Mobile Phone Number*</label>
+            <p-inputMask
+              [class.ng-dirty]="registerForm.controls['mobilePhone'].dirty || registerForm.controls['mobilePhone'].touched"
+              [class.ng-invalid]="registerForm.controls['mobilePhone'].invalid"
+              formControlName="mobilePhone"
+              mask="+99999999999" pInputText></p-inputMask>
+            <p-message *ngIf="registerForm.controls['mobilePhone'].invalid &&
+                        (registerForm.controls['mobilePhone'].dirty ||registerForm.controls['mobilePhone'].touched)"
+                       severity="error" text="Mobile phone is required">
+            </p-message>
+          </div>
+          <button (click)="register()" [disabled]="registerForm.invalid" class="p-button p-mb-2" label="Success" pButton
+                  pRipple type="button"></button>
+        </div>
+      </p-panel>
+    </form>
+  </div>
+  <p-toast key="tl" position="top-left"></p-toast>
 </div>

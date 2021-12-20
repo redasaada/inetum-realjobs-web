@@ -1,3 +1,3 @@
 export interface Gender {
-    name: string;
+  name: string;
 }
