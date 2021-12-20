@@ -11,11 +11,10 @@ import {Address} from "src/app/models/address";
 import {CountryService} from "src/app/services/country.service";
 import {Observable} from "rxjs";
 
-
 @Component({
   selector: "app-register",
   templateUrl: "./register.component.html",
-  styleUrls: ["./register.component.css"],
+  styleUrls: ["./register.component.scss"],
   providers: [MessageService],
 })
 export class RegisterComponent implements OnInit {
