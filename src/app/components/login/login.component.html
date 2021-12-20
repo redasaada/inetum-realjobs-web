@@ -1,6 +1,5 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()" id="loginForm">
   <div class="form-group">
-    <p-panel header="register" class="content">
       <label>Email</label>
       <input type="text" [formControlName]="'email'" />
       <div *ngIf="(email.invalid && (email.dirty || email.touched))" class="alert">
@@ -17,13 +16,10 @@
           </div>
         </div>
       </div>
-      <span id="buttons">
         <p>
           <button [disabled]="loginForm.invalid" type="submit">Submit</button>
         </p>
         <a routerLink="/register" routerLinkActive="active">Register</a>
-      </span>
-    </p-panel>
   </div>
   <div>
     <div *ngIf="badCredentials" style="color:red">

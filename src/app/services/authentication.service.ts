@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
-import { User } from '../models/user.model';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, tap} from 'rxjs';
+import {User} from '../models/user.model';
 import * as moment from "moment";
 
 const baseUrl= 'http://localhost:8080/api/authentication/';
@@ -10,12 +10,13 @@ const baseUrl= 'http://localhost:8080/api/authentication/';
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  login(values: any) : Observable<User>{
-    
-    return this.http.post<User>(baseUrl+'login', values)
-    .pipe(tap((res: any) => this.setSession(res)));
+  login(values: any): Observable<User> {
+
+    return this.http.post<User>(baseUrl + 'login', values)
+      .pipe(tap((res: any) => this.setSession(res)));
   }
 
   register(user: User) : Observable<string> {
@@ -29,29 +30,29 @@ export class AuthenticationService {
     localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('id_token');
     localStorage.removeItem("expires_at");
   }
 
-  public isLoggedIn(): boolean{
+  public isLoggedIn(): boolean {
     return !this.isTokenExpired();
   }
 
-  public isLoggedOut(): boolean{
+  public isLoggedOut(): boolean {
     return !this.isLoggedIn();
   }
 
-  isTokenExpired(): boolean{
+  isTokenExpired(): boolean {
     const expiration: number = Number(localStorage.getItem("expires_at"));
-      if (expiration!= null) {
-        return ((1000 * expiration) - (new Date()).getTime()) < 5000;
-      } else {
-        return false;
-      }
+    if (expiration != null) {
+      return ((1000 * expiration) - (new Date()).getTime()) < 5000;
+    } else {
+      return false;
+    }
   }
 
-  getJWTToken(){
+  getJWTToken() {
     return localStorage.getItem('id_token');
-}
+  }
 }

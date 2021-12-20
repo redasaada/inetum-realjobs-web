@@ -21,6 +21,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import {ToastModule} from 'primeng/toast';
 import {InputMaskModule} from 'primeng/inputmask';
+import {NotFoundComponent} from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {InputMaskModule} from 'primeng/inputmask';
     FilterFormComponent,
     LoginComponent,
     UserDetailsComponent,
-    RegisterComponent
+    RegisterComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,9 +51,10 @@ import {InputMaskModule} from 'primeng/inputmask';
     routing
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: UniversalAppInterceptor, multi: true},
     AuthGuardService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
