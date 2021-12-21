@@ -9,14 +9,16 @@ export class UniversalAppInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (!req.url.includes('/login') && !req.url.includes('/signUp')) {
+    if (!req.url.includes('/login') && !req.url.includes('/register')) {
       const token = this.authService.getJWTToken();
-      req = req.clone({
-        url: req.url,
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      if (token) {
+        req = req.clone({
+          url: req.url,
+          setHeaders: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+      }
     }
     return next.handle(req);
   }
