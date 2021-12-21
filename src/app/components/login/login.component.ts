@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {AuthenticationService} from 'src/app/services/authentication.service';
+import {Component, OnInit} from "@angular/core";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {AuthenticationService} from "src/app/services/authentication.service";
 
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: "app-add-user",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
 
@@ -14,16 +14,26 @@ export class LoginComponent implements OnInit {
 
   badCredentials: boolean = false;
 
-  // empty:boolean;
-
   constructor(private userService: AuthenticationService,
               private router: Router, private formBuilder: FormBuilder) {
   }
 
+  get form() {
+    return this.loginForm.controls;
+  }
+
+  get email() {
+    return this.loginForm.get("email");
+  }
+
+  get password() {
+    return this.loginForm.get("password");
+  }
+
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", Validators.required],
     });
     this.loginForm.valueChanges.subscribe(() => {
       this.badCredentials = false;
@@ -37,7 +47,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         complete: () => {
           // noinspection JSIgnoredPromiseFromCall
-          this.router.navigate(['']);
+          this.router.navigate([""]);
           this.badCredentials = false;
         },
         error: () => this.badCredentials = true,
@@ -50,17 +60,5 @@ export class LoginComponent implements OnInit {
 
   isLoggedIn(): boolean {
     return this.userService.isLoggedIn();
-  }
-
-  get form() {
-    return this.loginForm.controls;
-  }
-
-  get username() {
-    return this.loginForm.get('username');
-  }
-
-  get password() {
-    return this.loginForm.get('password');
   }
 }
