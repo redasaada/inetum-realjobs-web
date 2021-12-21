@@ -1,12 +1,13 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable, tap} from 'rxjs';
-import {User} from '../models/user.model';
+import {HttpClient} from "@angular/common/http";
+import {Injectable} from "@angular/core";
+import {Observable, tap} from "rxjs";
+import {User} from "../models/user.model";
 import * as moment from "moment";
 
-const baseUrl= 'http://localhost:8080/api/authentication/';
+const baseUrl = "http://localhost:8080/api/authentication/";
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthenticationService {
 
@@ -15,23 +16,16 @@ export class AuthenticationService {
 
   login(values: any): Observable<User> {
 
-    return this.http.post<User>(baseUrl + 'login', values)
+    return this.http.post<User>(baseUrl + "login", values)
       .pipe(tap((res: any) => this.setSession(res)));
   }
 
-  register(user: User) : Observable<string> {
-    return this.http.post<string>(baseUrl+'signUp', user);
-  }
-
-  private setSession(authResult: any){
-    const expiresAt = moment().add(authResult.expiresIn,'second');
-
-    localStorage.setItem('id_token', authResult.accessToken);
-    localStorage.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
+  register(user: User): Observable<string> {
+    return this.http.post<string>(baseUrl + "signUp", user);
   }
 
   logout() {
-    localStorage.removeItem('id_token');
+    localStorage.removeItem("id_token");
     localStorage.removeItem("expires_at");
   }
 
@@ -53,6 +47,13 @@ export class AuthenticationService {
   }
 
   getJWTToken() {
-    return localStorage.getItem('id_token');
+    return localStorage.getItem("id_token");
+  }
+
+  private setSession(authResult: any) {
+    const expiresAt = moment().add(authResult.expiresIn, "second");
+
+    localStorage.setItem("id_token", authResult.accessToken);
+    localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()));
   }
 }

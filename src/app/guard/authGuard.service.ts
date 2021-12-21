@@ -3,7 +3,7 @@ import {CanActivate, Router} from "@angular/router";
 import {AuthenticationService} from "../services/authentication.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class AuthGuardService implements CanActivate {
 
@@ -13,7 +13,7 @@ export class AuthGuardService implements CanActivate {
   canActivate(): boolean {
     if (this.auth.isTokenExpired()) {
       // noinspection JSIgnoredPromiseFromCall
-      this.router.navigate(['login']);
+      this.router.navigate(["login"]);
     }
     return true;
   }
