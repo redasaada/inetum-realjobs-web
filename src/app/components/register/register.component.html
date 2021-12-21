@@ -32,8 +32,8 @@
                 (verify(registerForm.controls['role']))" severity="error" text="Role is required"></p-message>
           <div class="p-field">
             <label for="gender">Gender*</label>
-            <p-dropdown [options]="gender" [showClear]="true" formControlName="gender"
-                        optionLabel="name" placeholder="Select your gender"></p-dropdown>
+            <p-dropdown [options]="genders" [showClear]="true" formControlName="gender"
+                        optionLabel="" placeholder="Select your gender"></p-dropdown>
             <p-message *ngIf="registerForm.controls['gender'].invalid &&
                     verify(registerForm.controls['gender'])" severity="error" text="Gender is required"></p-message>
           </div>
@@ -134,7 +134,7 @@
                        severity="error" text="Mobile phone is required">
             </p-message>
           </div>
-          <button (click)="register()" [disabled]="registerForm.invalid" class="p-button p-mb-2" label="Success" pButton
+          <button (click)="register()" [disabled]="registerForm.invalid" class="p-button p-mb-2" label="Submit" pButton
                   pRipple type="button"></button>
         </div>
       </p-panel>

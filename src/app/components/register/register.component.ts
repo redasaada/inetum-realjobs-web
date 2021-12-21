@@ -1,15 +1,15 @@
-import {Component, OnInit} from "@angular/core";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {Country} from "src/app/models/country";
-import {Gender} from "src/app/models/gender";
-import {Roles} from "src/app/models/roles.enum";
-import {User} from "src/app/models/user.model";
-import {AuthenticationService} from "src/app/services/authentication.service";
-import {MessageService} from "primeng/api";
-import {Address} from "src/app/models/address";
-import {CountryService} from "src/app/services/country.service";
-import {Observable} from "rxjs";
+import { Component, OnInit } from "@angular/core";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Country } from "src/app/models/country";
+import { Gender } from "src/app/models/gender.enum";
+import { Roles } from "src/app/models/roles.enum";
+import { User } from "src/app/models/user.model";
+import { AuthenticationService } from "src/app/services/authentication.service";
+import { MessageService, SelectItem } from "primeng/api";
+import { Address } from "src/app/models/address";
+import { CountryService } from "src/app/services/country.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-register",
@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
 
-  gender: Gender[];
+  genders: Array<String> = [];
 
   selectedRole: any = null;
 
@@ -36,14 +36,11 @@ export class RegisterComponent implements OnInit {
   user: User;
 
   constructor(private authService: AuthenticationService, private router: Router,
-              private formBuilder: FormBuilder, private messageService: MessageService,
-              private countryService: CountryService) {
-    this.gender = [
-      {name: "Male"},
-      {name: "Female"},
-      {name: "Other"},
-    ];
+    private formBuilder: FormBuilder, private messageService: MessageService,
+    private countryService: CountryService) {
 
+    this.genders = Object.keys(Gender).map(key =>
+      Gender[key].toString());
   }
 
   get eRoles(): string[] {
@@ -113,11 +110,11 @@ export class RegisterComponent implements OnInit {
   }
 
   showSuccess() {
-    this.messageService.add({key: "tl", severity: "success", summary: "Success", detail: "Registration successful"});
+    this.messageService.add({ key: "tl", severity: "success", summary: "Success", detail: "Registration successful" });
   }
 
   showError(errorMessage: string) {
-    this.messageService.add({key: "tl", severity: "error", summary: "Error", detail: errorMessage});
+    this.messageService.add({ key: "tl", severity: "error", summary: "Error", detail: errorMessage });
   }
 
   async onSuccess() {
@@ -156,8 +153,7 @@ export class RegisterComponent implements OnInit {
     user.password = this.registerForm.controls["password"].value;
     user.role = this.getKeyName(this.registerForm.controls["role"].value);
     let gender: Gender = this.registerForm.controls["gender"].value;
-    user.gender = gender["name"];
-    user.gender = user.gender.toUpperCase();
+    user.gender = gender
     user.firstName = this.registerForm.controls["firstName"].value;
     user.lastName = this.registerForm.controls["lastName"].value;
     user.birthDate = new Date(this.registerForm.controls["dateOfBirth"].value).toJSON();
